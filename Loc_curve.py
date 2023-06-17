@@ -128,7 +128,7 @@ class Locus_curve():
             plt.yscale('log')
         plt.title(self.name)
         plt.ylabel(self.res_name)
-        plt.xlabel(f"Amplitude {self.mut_var_name}")
+        plt.xlabel(f"Magnitude {self.mut_var_name}")
         plt.grid()
         plt.show()
         return None  

@@ -86,25 +86,6 @@ class Test_Complex_phys_unit(unittest.TestCase):
             self.assertEqual(Complex_phys_unit.complex_to_polar(compl_val)["phase"], phase, f"from compl. to polar transformed phase is not correct in sector {sector}")
             sector +=1
 
-           
-#Test Complex_curve Class
-# class Complex_curve_test(Complex_curve): 
-#     Za: list
-#     ue: complex 
-#     def calc_rule(self, Z_inp):
-#         return complex(R1.value, w*L1) - ((complex(0, w*self.ue*M)**2)/(complex(R2*Z_inp*self.ue**2, w*L2*self.ue**2)))
-    
-#     def __init__(self, ue, Za):
-#         self.ue = ue
-#         super().__init__(f"Eingangsimpedanz Z1 f. ü={ue}", f"Z1 [Ω]", f"Z2 [Ω]", Za)
-        
-# Za = list(range(0, 100000, 1))
-# Za_labels = {"0Ω": 0,"100Ω": 100, "250Ω": 250, "500Ω": 500, "1000Ω": 1000, "∞": 100000}
-# Zi_1 = Complex_curve_test(1, Za)
-# Zi_1.plot_complex(Za_labels)
-# Zi_1.plot_magn(xticks=[], yticks=[], x_log=True, y_log=True)
-# Zi_1.plot_phase(x_log=True)
-
 #---------------------------------------------------------------------------------------------
 if __name__ == '__main__':
     unittest.main()
