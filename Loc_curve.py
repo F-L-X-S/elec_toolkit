@@ -94,11 +94,10 @@ class Locus_curve():
         return None        
     
     #------------------------------------------------------magnitude-plot-function                                       
-    #e.g.: "50Hz": 50
     def plot_magn(self, xticks=[], yticks=[], x_log=False, y_log=False):
         #calc dict of magnitudes 
         if not x_log:
-            magn_dict =  self.calc_magn(self.data.items())
+            magn_dict =  self.calc_magn(self.data)
         else:
             #calculate logarithmic data for base 10 
             log_data_keys=self.get_log_scale(list(self.data.keys()), 0.1, 10, -2)
@@ -136,7 +135,7 @@ class Locus_curve():
     def plot_phase(self, xticks=[], x_log=False):
         #calc dict of of phases 
         if not x_log:
-            phase_dict = self.calc_phase(self.data.items())
+            phase_dict = self.calc_phase(self.data)
         else:
             #calculate logarithmic data for base 10 
             log_data_keys=self.get_log_scale(list(self.data.keys()), 0.1, 10, -2)

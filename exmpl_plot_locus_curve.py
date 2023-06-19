@@ -11,10 +11,10 @@ R2 = Phys_unit(400, "Ω", "R2")
 C1 = Phys_unit(79.6*10**(-9), "F", "C1")
 
 #define list with values for mutable variable (in this case: frequency from 1kHz to 8kHz)
-frequency_list = list(range(0, 10000, 10))
+frequency_list = list(range(0, 1000000, 10))
 
 #define dict with values for lables and the comments
-frequency_labels= {"1kHz": 1000,"2kHz": 2000,"4kHz": 4000, "6kHz": 6000, "8kHz": 8000, "10kHz": 10000}
+frequency_labels= {"1kHz": 1000,"2kHz": 2000,"4kHz": 4000, "6kHz": 6000, "8kHz": 8000, "10kHz": 10000, "∞":1000000}
 
 #define from Locus_curve derived class for the impedance of the circuit
 class Impedance(Locus_curve): 
@@ -30,5 +30,9 @@ class Impedance(Locus_curve):
         
 #create the locus curve
 impedance_curve = Impedance(R1, R2, C1, frequency_list)
-#add the labels and plot the curve
+#add the labels and plot the locus curve
 impedance_curve.plot_complex(frequency_labels)
+#plot amplitude response
+impedance_curve.plot_magn(x_log=True, y_log=True)
+#plot phase responde 
+impedance_curve.plot_phase(x_log=True)
