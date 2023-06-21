@@ -86,6 +86,45 @@ class Test_Complex_phys_unit(unittest.TestCase):
             self.assertEqual(Complex_phys_unit.complex_to_polar(compl_val)["phase"], phase, f"from compl. to polar transformed phase is not correct in sector {sector}")
             sector +=1
 
+#______________________________________________________________________________________________Test Signal Class
+time_list = list(np.arange(0, 2*np.pi, 0.01*np.pi))
+
+class sin_signal(Signal):
+        def calc_rule(self, angle):
+            return np.sin(angle)
+        
+class double_sin_signal(Signal):
+        def calc_rule(self, angle):
+            return 2*np.sin(angle)
+        
+#define constant-signal with magnitude "3"
+class const_signal(Signal):
+        def calc_rule(self, angle):
+            return 3
+    
+sine = sin_signal(time_list, 2*np.pi,"V", "Sine")
+double_sine = double_sin_signal(time_list, 2*np.pi, "V", "Doubled sine")
+const_v_signal = const_signal(time_list, 0, "V", "DC-Voltage")
+
+class Test_Signal(unittest.TestCase):
+
+    def test_constructor(self):
+        self.assertEqual(str(double_sine(np.pi/2)), "2.0", "wrong solution for doubled sine")
+    
+    def test_add(self):
+        for t in time_list:
+            self.assertEqual(round((sine + sine)(t), 4), round(double_sine(t), 4), "invalid solution of adding two Signal-instances (not equal to double_sine)")
+        self.assertEqual(((sine + sine)(np.pi/2)), 2, "invalid solution of adding two Signal-instances")               
+        self.assertEqual(((sine + 1)(np.pi/2)), 2, "invalid solution of adding Signal-instance and other (__add__)")  
+        self.assertEqual(((sine + const_v_signal)(np.pi/2)), 4, "invalid solution of adding Sine-Signal-instance and to const Signal instance (__add__)") 
+        self.assertEqual(((1 + sine)(np.pi/2)), 2, "invalid solution of adding other and Signal-instance (__radd__)") 
+
+    def test_sub(self):
+        for t in time_list:
+            self.assertEqual(round((sine - double_sine)(t), 4), round(-sine(t), 4), "invalid solution of substracting two Signal-instances")
+        self.assertEqual(((sine - double_sine)(np.pi/2)), -1, "invalid solution of substracting two Signal-instances") 
+        self.assertEqual(((sine - 1)(np.pi/2)), 0, "invalid solution of sub. int from Signal-instance") 
+        self.assertEqual(((1 - sine)(np.pi/2)), 0, "invalid solution of sub. Signal-instance from int (__radd__)") 
 #---------------------------------------------------------------------------------------------
 if __name__ == '__main__':
     unittest.main()

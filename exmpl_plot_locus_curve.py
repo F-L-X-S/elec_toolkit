@@ -2,7 +2,7 @@ from Loc_curve import *
 from  Phys_unit import *
 from  Complex_phys_unit import *
 
-#This example shows, how to plot the impedance-locus-curve of a resistor (R1 = 200 Ohm) in series with an 
+#This example shows, how to plot the impedance-locus-curve of a resistor (R1 = 200 Ohm) in series with an
 # RC parallel circuit (R2 = 400 Ohm, C=79,6nF) depending to the frequency f
 
 #define the physical values 

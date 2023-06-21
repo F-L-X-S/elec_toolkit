@@ -12,6 +12,9 @@ class Phys_unit():
         self.unit = unit
         self.discr = discription
         
+    def __call__(self):
+        return self.value
+        
     def __str__(self): 
         return f"{self.discr} : {self.value} {self.unit}"
     
