@@ -18,7 +18,14 @@ time_list = list(np.arange(0, 2*np.pi, 0.01*np.pi))
 period = 2*np.pi
 
 #create instance of the signal as a periodic voltage-Signal    
-const_voltage = dc_signal(time_list, 2*np.pi,"V", "DC-Voltage") 
-sine = sin_signal(time_list, 2*np.pi, "V", "Sine-Voltage")
-print(sine(0.2*np.pi))
+const_voltage = dc_signal(time_list, 2*np.pi,"V", "DC-voltage") 
+sine = sin_signal(time_list, 2*np.pi, "V", "sine-voltage")
 
+#plot the sine signal with user defined plot parameters
+sine.plot(xlim=(0, 2*np.pi), x_steps=list(np.arange(0, 2*np.pi, 0.25*np.pi)), ylim=(-1.5, 1.5), y_steps=list(np.arange(-1.5, 1.75, 0.25)), 
+          title = "sine signal",linewidth=2.0, color = 'g')
+
+#calculate new signal 
+delayed_sine = sine + const_voltage
+#plot the calculated signal with calculated plot parameters 
+delayed_sine.plot(linestyle = ":",color = "r")
