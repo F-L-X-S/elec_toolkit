@@ -30,7 +30,7 @@ class Phys_unit():
             return self.value + other
     
     def __radd__(self, other): 
-         return self.__add__(other)
+         return other+self.value  
         
     def __sub__(self, other): 
         if issubclass(type(other), Phys_unit) == True:
