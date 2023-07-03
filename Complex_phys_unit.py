@@ -12,6 +12,7 @@ class Complex_phys_unit(Phys_unit):
         self.origin = 0+0j
         super().__init__(value, unit, discription)
 
+    #alternative constructor
     @classmethod 
     def from_polar(cls, magnitude, phase, unit, discription=""):
         complex_value = cls.polar_to_complex(magnitude, phase)

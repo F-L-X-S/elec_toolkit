@@ -1,4 +1,4 @@
-
+from copy import deepcopy
 #________________________Phys_unit________________________
 #defines a real value with unit and optional discription
 #e.g.: R1 = Phys_unit(104, "Ω", "Resistor R1")
@@ -8,7 +8,10 @@ class Phys_unit():
     discr: str
         
     def __init__(self, value, unit, discription=""):
-        self.value = value
+        if issubclass(type(value), Phys_unit) == True:
+            self.value = value.value
+        else: 
+            self.value = value
         self.unit = unit
         self.discr = discription
         
@@ -19,17 +22,21 @@ class Phys_unit():
         return f"{self.discr} : {self.value} {self.unit}"
     
     def __add__(self, other): 
-        if type(other) == Phys_unit:
-            return self.value + other.value
+        if issubclass(type(other), Phys_unit) == True:
+            ret_instance = deepcopy(self)
+            ret_instance.value = self.value + other.value
+            return ret_instance
         else:
             return self.value + other
     
     def __radd__(self, other): 
-         return self.value + other
+         return self.__add__(other)
         
     def __sub__(self, other): 
-        if type(other) == Phys_unit:
-            return self.value - other.value
+        if issubclass(type(other), Phys_unit) == True:
+            ret_instance = deepcopy(self)
+            ret_instance.value = self.value - other.value
+            return ret_instance
         else:
             return self.value - other
     
@@ -37,28 +44,47 @@ class Phys_unit():
             return other-self.value  
     
     def __mul__(self, other):
-        if type(other) == Phys_unit:
-            return self.value * other.value
+        ret_instance = deepcopy(self)
+        if issubclass(type(other), Phys_unit) == True:
+            ret_instance.value = self.value * other.value
+            return ret_instance
         else: 
-            return self.value * other
+            ret_instance.value = self.value * other
+            return ret_instance
     
     def __rmul__(self, other):
-            return self.value * other
+        ret_instance = deepcopy(self)
+        ret_instance.value = other * self.value
+        return ret_instance
         
     def __truediv__(self, other):
-        if type(other) == Phys_unit:
-            return self.value / other.value
+        ret_instance = deepcopy(self)
+        if issubclass(type(other), Phys_unit) == True:
+            ret_instance.value = self.value / other.value
+            return ret_instance
         else: 
-            return self.value / other
+            ret_instance.value = self.value / other
+            return ret_instance
     
     def __rtruediv__(self, other):
-            return  other / self.value    
+        ret_instance = deepcopy(self)
+        ret_instance.value = other / self.value
+        return ret_instance
         
     def __pow__(self, other):
-        if isinstance(other, Phys_unit):
-            return self.value ** other.value
+        if issubclass(type(other), Phys_unit) == True:
+            ret_instance = deepcopy(self)
+            ret_instance.value = self.value ** other.value
+            return ret_instance
         else: 
-            return self.value ** other
+            ret_instance = deepcopy(self)
+            ret_instance.value = self.value ** other
+            return ret_instance
     
     def __rpow__(self, other):
             return  other**self.value
+        
+    def __round__(self, other):
+        ret_instance = deepcopy(self)
+        ret_instance.value = round(self.value, other)
+        return ret_instance

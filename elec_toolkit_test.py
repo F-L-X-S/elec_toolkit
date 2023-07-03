@@ -7,35 +7,35 @@ class Test_Phys_unit(unittest.TestCase):
         R1 = Phys_unit(104, "Ω")
         R2 = Phys_unit(70 * 10**(-3), "Ω")
         sum = (R1 + R2)
-        self.assertEqual(sum, (R2.value + R1), "solution of add and radd should be equal")
-        self.assertEqual(sum, 104.07, "wrong solution of add and radd")
+        self.assertEqual(sum.value, (R2.value + R1), f"solution of add and radd should be equal: {sum} != {R2.value + R1}")
+        self.assertEqual(str(sum), str(Phys_unit(104.07, "Ω")), f"wrong solution of add and radd: {sum}")
         
     def test_sub(self):
         R1 = Phys_unit(104, "Ω")
         R2 = Phys_unit(70 * 10**(-3), "Ω")
         diff = (R1 - R2)
-        self.assertEqual(diff, ((-R2.value) + R1), "solution of sub and rsub should be equal")
-        self.assertEqual(diff, 103.93, "wrong solution of sub and rsub")
+        self.assertEqual(diff.value, ((-R2.value) + R1), "solution of sub and rsub should be equal")
+        self.assertEqual(str(diff), str(Phys_unit(103.93, "Ω")), "wrong solution of sub and rsub")
         
     def test_mul(self):
         R1 = Phys_unit(104, "Ω")
         R2 = Phys_unit(70 * 10**(-3), "Ω")        
         mul = R1*R2
-        self.assertEqual(mul, (R2.value * R1), "solution of mul and rmul should be equal")
-        self.assertEqual(round(mul,5), 7.28, "wrong solution of mul and rmul")    
+        self.assertEqual(str(mul), str(R2.value * R1), "solution of mul and rmul should be equal")
+        self.assertEqual(round(mul,5).value, 7.28, "wrong solution of mul and rmul")    
     
     def test_tdiv(self):
         R1 = Phys_unit(104, "Ω")
         R2 = Phys_unit(70 * 10**(-3), "Ω")
         div = R1/R2
-        self.assertEqual(div, (R1.value*(1/R2)), "solution of div and multiplication with 1/x should be equal")
-        self.assertNotEqual(div, (R2.value/R1), "solution of div and rdiv should not be equal")
-        self.assertEqual(round(div, 5), 1485.71429, "wrong solution of div and rdiv")    
+        self.assertEqual(str(div), str((R1.value*(1/R2))), "solution of div and multiplication with 1/x should be equal")
+        self.assertNotEqual(str(div), str((R2.value/R1)), "solution of div and rdiv should not be equal")
+        self.assertEqual(str(round(div, 5)), str(Phys_unit(1485.71429, "Ω")), "wrong solution of div and rdiv")    
         
     def test_pow(self):
         R1 = Phys_unit(104, "Ω")
         pow = R1**3
-        self.assertEqual(pow, R1*R1*R1, "solution of x^3 should be the same as x*x*x")    
+        self.assertEqual(str(pow), str(R1*R1*R1), "solution of x^3 should be the same as x*x*x")    
         R2 = Phys_unit(70 * 10**(-3), "Ω")
         rpow = 3**R2
         self.assertEqual(round(rpow, 6), 1.079937, "solution of 3^x is wrong") 
@@ -44,7 +44,7 @@ class Test_Phys_unit(unittest.TestCase):
         Rm1 = Phys_unit(2400 * 10**3, "A/Vs")
         N1 = Phys_unit(4008, "")
         L1 = Phys_unit(((N1**2)/Rm1), "H", "Inductance primary coil L1")
-        self.assertEqual(str(L1), 'Inductance primary coil L1 : 6.69336 H', "Printed str not as expected")
+        self.assertEqual(str(L1), 'Inductance primary coil L1 : 6.69336 H', f"Printed str not as expected: {str(L1)}")
 
 #______________________________________________________________________________________________TestTest Complex_phys_unit Class
 class Test_Complex_phys_unit(unittest.TestCase):
