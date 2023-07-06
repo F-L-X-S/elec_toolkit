@@ -8,26 +8,41 @@ class Signal(Phys_unit):
     #------------------------------------------------------calculation rule
     #define calculation in derived class
     def calc_rule(self, angle):
-        pass
+        return self.value[angle]
     
     #------------------------------------------------------constructor
-    def __init__(self, times: list, period: float, unit: str, discription=""):  
+    def __init__(self, times: list, values: list, unit: str, discription=""):  
+        data = dict(zip(times, values))
+        super().__init__(data, unit, discription) 
+
+    #------------------------------------------------------construct from superimposed harmonics 
+    @classmethod 
+    def from_harmonics(cls, harmonics: list,times: list, period: float, unit: str, discription=""):
+        data = {}
+        #calculte timediscrete values
+        for t in times:
+            for h in harmonics:
+               data[t] =+ h(t)  
+ 
+        return cls(list(data.keys()),list(data.values()), unit, discription)
+    
+    #------------------------------------------------------construct from redefined calculation rule 
+    @classmethod 
+    def from_calc_rule(cls, times: list, period: float, unit: str, discription=""):
         data = {}
         #periodic Signal
         if period != 0.0: 
-            frequency = 1/period
-            for t in  times: 
-                t = round(t, 6)
-                angle = round(2*np.pi*frequency*t, 6)
-                data[t] = round(self.calc_rule(angle), 6)   
+               frequency = 1/period
+               for t in  times: 
+                   t = round(t, 6)
+                   angle = round(2*np.pi*frequency*t, 6)
+                   data[t] = round(cls.calc_rule(cls, angle), 6)   
         #constant signal
         else:
-            for t in  times: 
-                t = round(t, 6)
-                data[t] = round(self.calc_rule(0), 6)   
-
-        super().__init__(data, unit, discription)  
-    
+                for t in  times: 
+                    t = round(t, 6)
+                    data[t] = round(cls.calc_rule(cls, 0), 6)   
+        return cls(list(data.keys()),list(data.values()), unit, discription)
     #------------------------------------------------------operations
     def __call__(self, t=None):
         if t == None:

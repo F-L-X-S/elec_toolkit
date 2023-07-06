@@ -29,3 +29,10 @@ sine.plot(xlim=(0, 2*np.pi), x_steps=list(np.arange(0, 2*np.pi, 0.25*np.pi)), yl
 delayed_sine = sine + const_voltage
 #plot the calculated signal with calculated plot parameters 
 delayed_sine.plot(linestyle = ":",color = "r")
+
+#create Signal from multiple harmonics (two-pulse rectifier signal)
+class harmonics_signal(Signal):
+        def calc_rule(self, angle):
+            for n in range(0, 21):
+                
+            return np.sin(angle)

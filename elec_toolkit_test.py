@@ -102,9 +102,9 @@ class const_signal(Signal):
         def calc_rule(self, angle):
             return 3
     
-sine = sin_signal(time_list, 2*np.pi,"V", "Sine")
-double_sine = double_sin_signal(time_list, 2*np.pi, "V", "Doubled sine")
-const_v_signal = const_signal(time_list, 0, "V", "DC-Voltage")
+sine = sin_signal.from_calc_rule(time_list, 2*np.pi,"V", "Sine")
+double_sine = double_sin_signal.from_calc_rule(time_list, 2*np.pi, "V", "Doubled sine")
+const_v_signal = const_signal.from_calc_rule(time_list, 0, "V", "DC-Voltage")
 
 class Test_Signal(unittest.TestCase):
 

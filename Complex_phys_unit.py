@@ -3,8 +3,9 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 class Complex_phys_unit(Phys_unit):
-    def __init__(self, value: complex, unit, discription=""):
+    def __init__(self, value: complex, unit="", discription="",speed=1):
         self.value = value
+        self.speed = speed 
         self.unit = unit
         self.discr = discription
         self.magn = round(self.complex_to_polar(value)['magn'], 3)

@@ -17,7 +17,7 @@ V2.plot(V1)
 #concatenate the second vector with the previous one 
 V3.plot(V2)
 
-X = V1+I1
+X = V1/I1
 X.plot()
 #plot the current without concatenation
 print(I1)
