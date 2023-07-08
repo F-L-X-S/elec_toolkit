@@ -3,9 +3,9 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 class Complex_phys_unit(Phys_unit):
-    def __init__(self, value: complex, unit="", discription="",speed=1):
+    def __init__(self, value: complex, unit="", discription="", frequency=1):
         self.value = value
-        self.speed = speed 
+        self.frequency = frequency 
         self.unit = unit
         self.discr = discription
         self.magn = round(self.complex_to_polar(value)['magn'], 3)
@@ -65,3 +65,9 @@ class Complex_phys_unit(Phys_unit):
         else:
             self.origin = conc_vector.origin + conc_vector.value
         return self.plot_vector([self.value.real, self.value.imag], [self.origin.real, self.origin.imag], self.discr, self.unit, **options)
+
+    def __call__(self, t = None):
+        if t != None:
+            return self.value.imag*np.sin(2*np.pi*self.frequency *t)+self.value.real*np.cos(2*np.pi*self.frequency *t)
+        else:
+            return self.value

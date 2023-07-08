@@ -21,9 +21,9 @@ class Signal(Phys_unit):
         data = {}
         #calculte timediscrete values
         for t in times:
+            data[t] = 0
             for h in harmonics:
-               data[t] =+ h(t)  
- 
+                data[t] += h(t)  
         return cls(list(data.keys()),list(data.values()), unit, discription)
     
     #------------------------------------------------------construct from redefined calculation rule 

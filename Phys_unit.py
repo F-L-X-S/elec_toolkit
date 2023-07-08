@@ -15,10 +15,7 @@ class Phys_unit():
         self.unit = unit
         self.discr = discription
         
-    def __call__(self, t = None):
-        if type(self.value) is dict and t != None:
-            return self.value[t]
-        else:
+    def __call__(self):
             return self.value
         
     def __str__(self): 
