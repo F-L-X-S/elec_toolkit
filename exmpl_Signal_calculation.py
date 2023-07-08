@@ -47,6 +47,6 @@ for n in range (0, 21):
     else:
         harmonics.append(Complex_phys_unit.Complex_phys_unit(complex(0, 0), unit="V", discription=str(n)+"th harmonic", frequency = n*frequency))
 #ceate times 
-time_list = list(np.arange(0, 1, 1/1000))    
+time_list = list(np.arange(0, 1/1000, 1/100000))    
 two_pulse_rect = Signal.from_harmonics(harmonics = harmonics,times = time_list, period = 1/frequency, unit = "V", discription="two-pulse rectifier signal")
 two_pulse_rect.plot()
