@@ -25,7 +25,7 @@ class Impedance(Locus_curve):
         self.R_ser = R_ser
         self.R_par = R_par
         self.C_par = C_par
-        #__init__("Plot-title", "discr. of the result", "discr. of mutable variable", list with values for mutable varaible)
+        #__init__("Plot-title", "descr. of the result", "descr. of mutable variable", list with values for mutable varaible)
         super().__init__(f"Locus-curve for R-RC-Circuit", f"Z [Ω]", f"f [Hz]", frequency_list)
         
 #create the locus curve

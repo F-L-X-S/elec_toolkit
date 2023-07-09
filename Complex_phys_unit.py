@@ -3,24 +3,24 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 class Complex_phys_unit(Phys_unit):
-    def __init__(self, value: complex, unit="", discription="", frequency=1):
+    def __init__(self, value: complex, unit="", description="", frequency=1):
         self.value = value
         self.frequency = frequency 
         self.unit = unit
-        self.discr = discription
+        self.descr = description
         self.magn = round(self.complex_to_polar(value)['magn'], 3)
         self.phase = round(self.complex_to_polar(value)["phase"], 3)
         self.origin = 0+0j
-        super().__init__(value, unit, discription)
+        super().__init__(value, unit, description)
 
     #alternative constructor
     @classmethod 
-    def from_polar(cls, magnitude, phase, unit, discription=""):
+    def from_polar(cls, magnitude, phase, unit, description=""):
         complex_value = cls.polar_to_complex(magnitude, phase)
-        return cls(complex_value, unit, discription)
+        return cls(complex_value, unit, description)
     
     def __str__(self): 
-        return f"{self.discr} : {self.value}{self.unit} = {self.magn}{self.unit}∠{self.phase}°"   
+        return f"{self.descr} : {self.value}{self.unit} = {self.magn}{self.unit}∠{self.phase}°"   
      
     @staticmethod    
     def polar_to_complex(magnitude, phase):
@@ -64,7 +64,7 @@ class Complex_phys_unit(Phys_unit):
             self.origin = 0+0j
         else:
             self.origin = conc_vector.origin + conc_vector.value
-        return self.plot_vector([self.value.real, self.value.imag], [self.origin.real, self.origin.imag], self.discr, self.unit, **options)
+        return self.plot_vector([self.value.real, self.value.imag], [self.origin.real, self.origin.imag], self.descr, self.unit, **options)
 
     def __call__(self, t = None):
         if t != None:

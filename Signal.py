@@ -11,24 +11,24 @@ class Signal(Phys_unit):
         return self.value[angle]
     
     #------------------------------------------------------constructor
-    def __init__(self, times: list, values: list, unit: str, discription=""):  
+    def __init__(self, times: list, values: list, unit: str, description=""):  
         data = dict(zip(times, values))
-        super().__init__(data, unit, discription) 
+        super().__init__(data, unit, description) 
 
     #------------------------------------------------------construct from superimposed harmonics 
     @classmethod 
-    def from_harmonics(cls, harmonics: list,times: list, period: float, unit: str, discription=""):
+    def from_harmonics(cls, harmonics: list,times: list, period: float, unit: str, description=""):
         data = {}
         #calculte timediscrete values
         for t in times:
             data[t] = 0
             for h in harmonics:
                 data[t] += h(t)  
-        return cls(list(data.keys()),list(data.values()), unit, discription)
+        return cls(list(data.keys()),list(data.values()), unit, description)
     
     #------------------------------------------------------construct from redefined calculation rule 
     @classmethod 
-    def from_calc_rule(cls, times: list, period: float, unit: str, discription=""):
+    def from_calc_rule(cls, times: list, period: float, unit: str, description=""):
         data = {}
         #periodic Signal
         if period != 0.0: 
@@ -42,7 +42,7 @@ class Signal(Phys_unit):
                 for t in  times: 
                     t = round(t, 6)
                     data[t] = round(cls.calc_rule(cls, 0), 6)   
-        return cls(list(data.keys()),list(data.values()), unit, discription)
+        return cls(list(data.keys()),list(data.values()), unit, description)
     #------------------------------------------------------operations
     def __call__(self, t=None):
         if t == None:
@@ -97,8 +97,8 @@ class Signal(Phys_unit):
         except NameError: fig, ax = plt.subplots()
         #configure plot
         if title == None:
-            title = self.discr
-        options["label"] = self.discr
+            title = self.descr
+        options["label"] = self.descr
         ax.plot(self.value.keys(), self.value.values(), **options)
 
         #limits abscissa
@@ -122,6 +122,6 @@ class Signal(Phys_unit):
         ax.set(xlim=xlim, xticks=x_steps, ylim=ylim, yticks=y_steps)
         plt.title(title)
         plt.xlabel("t")
-        plt.ylabel(self.discr +" [" + self.unit+ "]")
+        plt.ylabel(self.descr +" [" + self.unit+ "]")
         plt.grid()
         plt.show()

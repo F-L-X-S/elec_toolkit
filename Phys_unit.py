@@ -1,25 +1,25 @@
 from copy import deepcopy
 #________________________Phys_unit________________________
-#defines a real value with unit and optional discription
+#defines a real value with unit and optional description
 #e.g.: R1 = Phys_unit(104, "Ω", "Resistor R1")
 
 class Phys_unit():
     unit: str
-    discr: str
+    descr: str
         
-    def __init__(self, value, unit, discription=""):
+    def __init__(self, value, unit, description=""):
         if issubclass(type(value), Phys_unit) == True:
             self.value = value.value
         else: 
             self.value = value
         self.unit = unit
-        self.discr = discription
+        self.descr = description
         
     def __call__(self):
             return self.value
         
     def __str__(self): 
-        return f"{self.discr} : {self.value} {self.unit}"
+        return f"{self.descr} : {self.value} {self.unit}"
     
     def __add__(self, other): 
         if issubclass(type(other), Phys_unit) == True:

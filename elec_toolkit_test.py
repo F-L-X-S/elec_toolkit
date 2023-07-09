@@ -57,7 +57,7 @@ class Test_Complex_phys_unit(unittest.TestCase):
         self.assertEqual(from_complex_val.magn, from_polar_val.magn, "from polar values constructed object is not equal to regular complex object")
         self.assertEqual(from_complex_val.phase, from_polar_val.phase, "from polar values constructed object is not equal to regular complex object")
         self.assertEqual(from_complex_val.unit, from_polar_val.unit, "from polar values constructed object is not equal to regular complex object")
-        self.assertEqual(from_complex_val.discr, from_polar_val.discr, "from polar values constructed object is not equal to regular complex object")
+        self.assertEqual(from_complex_val.descr, from_polar_val.descr, "from polar values constructed object is not equal to regular complex object")
         
     def test_str(self):
         complex_val = Complex_phys_unit(complex(-100, 100), "Ω", "complex value")
