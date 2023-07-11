@@ -18,9 +18,6 @@ class Complex_phys_unit(Phys_unit):
     def from_polar(cls, magnitude, phase, unit, description=""):
         complex_value = cls.polar_to_complex(magnitude, phase)
         return cls(complex_value, unit, description)
-    
-    def __str__(self): 
-        return f"{self.descr} : {self.value}{self.unit} = {self.magn}{self.unit}∠{self.phase}°"   
      
     @staticmethod    
     def polar_to_complex(magnitude, phase):
@@ -71,3 +68,53 @@ class Complex_phys_unit(Phys_unit):
             return self.value.imag*np.sin(2*np.pi*self.frequency *t)+self.value.real*np.cos(2*np.pi*self.frequency *t)
         else:
             return self.value
+
+        
+    def __str__(self): 
+        return f"{self.descr} : {self.value}{self.unit} = {self.magn}{self.unit}∠{self.phase}°"   
+
+    
+    def __mul__(self, other):
+        ret_instance = deepcopy(self)
+        if issubclass(type(other), Complex_phys_unit) == True:
+            ret_instance.value = self.value * other.value
+            return ret_instance
+        elif type(other) == Phys_unit:
+            ret_instance.value = complex(self.value.real * other.value, self.value.imag * other.value)
+            return ret_instance
+        else: 
+            ret_instance.value = self.value * other
+            return ret_instance
+    
+    def __rmul__(self, other):
+        return self.__mul__(other)
+        
+    def __truediv__(self, other):
+        ret_instance = deepcopy(self)
+        if issubclass(type(other), Complex_phys_unit) == True:
+            ret_instance.value = self.value / other.value
+            return ret_instance
+        elif type(other) == Phys_unit:
+            ret_instance.value = complex(self.value.real / other.value, self.value.imag / other.value)
+            return ret_instance
+        else: 
+            ret_instance.value = self.value / other
+            return ret_instance
+    
+    def __rtruediv__(self, other):
+        ret_instance = deepcopy(self)
+        ret_instance.value = other / self.value
+        return ret_instance
+        
+    def __pow__(self, other):
+        if issubclass(type(other), Phys_unit) == True:
+            ret_instance = deepcopy(self)
+            ret_instance.value = self.value ** other.value
+            return ret_instance 
+        else: 
+            ret_instance = deepcopy(self)
+            ret_instance.value = self.value ** other
+            return ret_instance
+    
+    def __rpow__(self, other):
+            return  other**self.value

@@ -1,4 +1,5 @@
 from copy import deepcopy
+
 #________________________Phys_unit________________________
 #defines a real value with unit and optional description
 #e.g.: R1 = Phys_unit(104, "Ω", "Resistor R1")
@@ -53,9 +54,7 @@ class Phys_unit():
             return ret_instance
     
     def __rmul__(self, other):
-        ret_instance = deepcopy(self)
-        ret_instance.value = other * self.value
-        return ret_instance
+        return self.__mul__(other)
         
     def __truediv__(self, other):
         ret_instance = deepcopy(self)

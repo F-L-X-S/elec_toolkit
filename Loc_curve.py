@@ -7,10 +7,13 @@ class Locus_curve():
         pass
     
     #calculate every complex data point  
-    def calc_data(self, mutable_var_list: list):
+    def calc_data(self, mutable_var_list: list, as_raw = False):
         data = {}
         for var in  mutable_var_list: 
-            data[var]=self.calc_rule(var)
+            if as_raw == True:
+                data[var]=self.calc_rule(var).value
+            else:
+                data[var]=self.calc_rule(var)
         return data
     
     #calculate magnitude for every key with complex as variable
@@ -63,11 +66,14 @@ class Locus_curve():
         re=[]
         im=[]
         for complex_value in self.data.values():
-            re.append(complex_value.real)
-            im.append(complex_value.imag)
-        
+            if issubclass(type(complex_value), Phys_unit):
+                re.append(complex_value.value.real)
+                im.append(complex_value.value.imag)
+            else: 
+                re.append(complex_value.real)
+                im.append(complex_value.imag)
         #convert labels
-        labels_data=self.calc_data(labels.values())
+        labels_data=self.calc_data(labels.values(), as_raw=True)
         re_mark=[]
         im_mark=[]
         for annotation, mut_var in labels.items():

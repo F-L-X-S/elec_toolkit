@@ -37,7 +37,7 @@ max_amplitude = 5   #Amplitude of 5V
 frequency = 1  #Frequency of the resulting Signal (e.g. period of 1s)
 harmonics = []
 #use the formula of the fourier transformation for the signal specific calculation 
-for n in range (0, 21):
+for n in range (0, 201):
     if n == 0: 
         #create complex value with frequency = 0 for DC value 
         harmonics.append(Complex_phys_unit.Complex_phys_unit(complex(2*max_amplitude/np.pi, 0), unit="V", description=str(n)+"th harmonic", frequency = 0))
@@ -47,6 +47,6 @@ for n in range (0, 21):
     else:
         harmonics.append(Complex_phys_unit.Complex_phys_unit(complex(0, 0), unit="V", description=str(n)+"th harmonic", frequency = n*frequency))
 #ceate times 
-time_list = list(np.arange(0, 1/1000, 1/100000))    
+time_list = list(np.arange(0, 1, 1/1000))    
 two_pulse_rect = Signal.from_harmonics(harmonics = harmonics,times = time_list, period = 1/frequency, unit = "V", description="two-pulse rectifier signal")
 two_pulse_rect.plot()
