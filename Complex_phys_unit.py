@@ -55,14 +55,55 @@ class Complex_phys_unit(Phys_unit):
             width=0.002*magn, 
             **options)
     
-    
+    #Function for plotting amplitude or phase diagram for List of Complex_phys_unit-objects
+    @staticmethod
+    def plot_bars(harmonics: list,color = 'r',fig = None):
+        if fig == None:
+            fig=plt.figure(figsize=(12, 10)) #plotsize   
+            
+        #amplitude    
+        ampl_plot = fig.add_subplot(2, 1, 1) #plotposition in matrix (row, column, position)
+        amplitudes = {}
+        n = 0
+        for h in harmonics:
+            amplitudes.update([(str(n), h.complex_to_polar(h())["magn"])]) #add amplitude 
+            n += 1
+        ampl_plot.bar(list(amplitudes.keys()), list(amplitudes.values()), color = color, width = 0.25, align = "center")
+        ampl_plot.set_ylabel('Amplitude')
+        ampl_plot.set_xlabel('Order of the harmonic')
+        ampl_plot.set_title('spectrum of amplitudes')
+        ampl_plot.set_xticks(list(amplitudes.keys()))
+        ampl_plot.set_yticks(np.arange(0, 7, 0.5))
+        ampl_plot.grid()
+        
+        #phase
+        phases = {}
+        n = 0
+        for h in harmonics:
+            phases.update([(str(n), h.complex_to_polar(h())["phase"])]) #add magnitude 
+            n += 1
+        phase_plot = fig.add_subplot(2, 1, 2)
+        phase_plot.bar(list(phases.keys()), list(phases.values()), color = color, width = 0.25)
+        phase_plot.set_ylabel('Phase [°el]')
+        phase_plot.set_xlabel('Order of the harmonic')
+        phase_plot.set_title('spectrum of phases')
+        phase_plot.set_xticks(list(phases.keys()))
+        phase_plot.set_yticks(np.arange(-180, 190, 20))
+        phase_plot.set_xlim(0, 21)
+        phase_plot.grid()
+        
+        plt.show()
+        return 0
+  
+
     def plot(self, conc_vector=None, **options):
         if conc_vector == None:
             self.origin = 0+0j
         else:
             self.origin = conc_vector.origin + conc_vector.value
         return self.plot_vector([self.value.real, self.value.imag], [self.origin.real, self.origin.imag], self.descr, self.unit, **options)
-
+        
+    
     def __call__(self, t = None):
         if t != None:
             return self.value.imag*np.sin(2*np.pi*self.frequency *t)+self.value.real*np.cos(2*np.pi*self.frequency *t)

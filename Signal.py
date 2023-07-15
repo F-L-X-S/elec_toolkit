@@ -22,8 +22,13 @@ class Signal(Phys_unit):
         #calculte timediscrete values
         for t in times:
             data[t] = 0
+            n=0
             for h in harmonics:
-                data[t] += h(t)  
+                if n==0:
+                    data[t] += h(t)/2  #DC-part
+                else:
+                    data[t] += h(t)  
+                n+=1
         return cls(list(data.keys()),list(data.values()), unit, description)
     
     #------------------------------------------------------construct from redefined calculation rule 
