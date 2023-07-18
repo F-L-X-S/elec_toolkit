@@ -28,7 +28,7 @@ class Complex_phys_unit(Phys_unit):
     @staticmethod
     def complex_to_polar(complex_number):
         try:
-            phase = np.degrees(np.arctan2(complex_number.imag, complex_number.real)) 
+            phase = np.degrees(np.arctan2(complex_number.imag, complex_number.real)) #sine-based phase
         except ZeroDivisionError:
             phase = 0
         magn = np.sqrt((complex_number.imag**2)+(complex_number.real**2))
@@ -69,9 +69,9 @@ class Complex_phys_unit(Phys_unit):
             amplitudes.update([(str(n), h.complex_to_polar(h())["magn"])]) #add amplitude 
             n += 1
         ampl_plot.bar(list(amplitudes.keys()), list(amplitudes.values()), color = color, width = 0.25, align = "center")
-        ampl_plot.set_ylabel('Amplitude')
+        ampl_plot.set_ylabel('amplitude')
         ampl_plot.set_xlabel('Order of the harmonic')
-        ampl_plot.set_title('spectrum of amplitudes')
+        ampl_plot.set_title('amplitude')
         ampl_plot.set_xticks(list(amplitudes.keys()))
         ampl_plot.set_yticks(np.arange(0, 7, 0.5))
         ampl_plot.grid()
@@ -86,7 +86,7 @@ class Complex_phys_unit(Phys_unit):
         phase_plot.bar(list(phases.keys()), list(phases.values()), color = color, width = 0.25)
         phase_plot.set_ylabel('Phase [°el]')
         phase_plot.set_xlabel('Order of the harmonic')
-        phase_plot.set_title('spectrum of phases')
+        phase_plot.set_title('phase')
         phase_plot.set_xticks(list(phases.keys()))
         phase_plot.set_yticks(np.arange(-180, 190, 20))
         phase_plot.set_xlim(0, 21)
