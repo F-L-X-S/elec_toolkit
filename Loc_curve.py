@@ -101,7 +101,7 @@ class Locus_curve():
         return None        
     
     #------------------------------------------------------magnitude-plot-function                                       
-    def plot_magn(self, xticks=[], yticks=[], x_log=False, y_log=False):
+    def plot_magn(self, xticks=[], yticks=[], x_log=False, y_log=False, figure = None):
         #calc dict of magnitudes 
         if not x_log:
             magn_dict =  self.calc_magn(self.data)
@@ -110,36 +110,47 @@ class Locus_curve():
             log_data_keys=self.get_log_scale(list(self.data.keys()), 0.1, 10, -2)
             log_data = self.calc_data(log_data_keys)
             magn_dict =  self.calc_magn(log_data)
-            
-        #plot
-        fig, ax = plt.subplots()
-        ax.plot(magn_dict.keys(), magn_dict.values(), linewidth=2.0, color = 'r', 
-                label=f"{self.name} of {self.mut_var_name}")
-        #config axis 
+        #create plot-figure
+        if figure == None:
+            fig=plt.figure(figsize=(8, 12)) #plotsize
+        #create subplot 
+        magn_plot = fig.add_subplot(2, 1, 1) #Plotposition (rows, columns, position)
+        magn_plot.plot(magn_dict.keys(), magn_dict.values(), linewidth=2.0, label="Magnitude")
+
+        #config axis-ticks
         if xticks!=[] and yticks!=[]:
-            plt.axis([min(xticks), max(xticks), min(yticks), max(yticks)])
-            ax.set(xticks=xticks, yticks=yticks)
+            magn_plot.set_xticks(xticks)
+            magn_plot.set_yticks(yticks)
         elif xticks!=[]:
-            ax.set(xticks=xticks)
+            magn_plot.set_xticks(xticks)
         elif yticks!=[]:
-            ax.set(yticks=yticks)
+            magn_plot.set_yticks(yticks)
+
         #set limits for axis
         y_min = min(list(magn_dict.values()))
-        y_max = 1.2*max(list(magn_dict.values()))
-        plt.axis([min(list(magn_dict.keys())), max(list(magn_dict.keys())),
-                      y_min, y_max])   
+        y_max = 1.2*max(list(magn_dict.values())) 
+        x_min = min(list(magn_dict.keys()))
+        x_max = max(list(magn_dict.keys()))
+        magn_plot.set_xlim(x_min, x_max)
+        magn_plot.set_ylim(y_min, y_max)
+        
+        #scale 
         if x_log:
-            plt.xscale('log')
+            magn_plot.set_xscale('log')
         if y_log:
-            plt.yscale('log')
-        plt.title(self.name)
-        plt.ylabel(self.res_name)
-        plt.xlabel(f"Magnitude {self.mut_var_name}")
-        plt.grid()
+            magn_plot.set_yscale('log')
+        
+        #comments
+        magn_plot.set_title(self.name)
+        magn_plot.set_ylabel(self.res_name)
+        magn_plot.set_xlabel(f"Magnitude {self.mut_var_name}")
+        
+        #show plot 
+        magn_plot.grid()
         plt.show()
-        return None  
+        return fig  
     #------------------------------------------------------phase-plot-function
-    def plot_phase(self, xticks=[], x_log=False):
+    def plot_phase(self, xticks=[], x_log=False, figure = None):
         #calc dict of of phases 
         if not x_log:
             phase_dict = self.calc_phase(self.data)
@@ -149,28 +160,38 @@ class Locus_curve():
             log_data = self.calc_data(log_data_keys)
             phase_dict =  self.calc_phase(log_data)
         
-        #plot
-        fig, ax = plt.subplots()
-        ax.plot(phase_dict.keys(), phase_dict.values(), linewidth=2.0, color = "red", label="Phase")
-        #config axis
+        #create plot-figure
+        if figure == None:
+            fig=plt.figure(figsize=(8, 12)) #plotsize
+        #create subplot 
+        phase_plot = fig.add_subplot(2, 1, 1) #Plotposition (rows, columns, position)
+        phase_plot.plot(phase_dict.keys(), phase_dict.values(), linewidth=2.0, label="Phase")
+
+        #config axis-ticks
         rel_y_space = 0.2* abs(max(list(phase_dict.values()))-min(list(phase_dict.values())))
         y_min=min(list(phase_dict.values()))-rel_y_space
         y_max=max(list(phase_dict.values()))+rel_y_space
         phase_ticks = range(round(y_min/10)*10, round(y_max/10)*10, 10)
         if xticks!=[]:
-            plt.axis([min(xticks), max(xticks), min(yticks), max(yticks)])
-            ax.set(xticks=xticks, yticks=yticks)
-        else:
-            ax.set(yticks=phase_ticks)
- 
-        #set limits for axis
-        plt.axis([min(list(phase_dict.keys())), max(list(phase_dict.keys())),
-                 y_min, y_max])   
+            phase_plot.set_xticks(xticks)
+        phase_plot.set_yticks(phase_ticks)
+
+        #set limits for axis        
+        x_min = min(list(phase_dict.keys()))
+        x_max = max(list(phase_dict.keys()))
+        phase_plot.set_xlim(x_min, x_max)
+        phase_plot.set_ylim(y_min, y_max)
+        
+        #scale 
         if x_log:
-            plt.xscale('log')
-        plt.title(self.name)
-        plt.ylabel(f"Phase {self.res_name}")
-        plt.xlabel(self.mut_var_name)
-        plt.grid()
+            phase_plot.set_xscale('log')
+        
+        #comments
+        phase_plot.set_title(self.name)
+        phase_plot.set_ylabel(self.res_name)
+        phase_plot.set_xlabel(f"Phase {self.mut_var_name}")
+        
+        #show plot 
+        phase_plot.grid()
         plt.show()
-        return None  
+        return fig  
