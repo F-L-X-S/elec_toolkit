@@ -1,5 +1,5 @@
 from  Complex_phys_unit import *
-
+from math import ceil, floor, log10
 
 class Locus_curve():
     #define calculation in inheriting class
@@ -128,7 +128,13 @@ class Locus_curve():
 
         #set limits for axis
         y_min = min(list(magn_dict.values()))
-        y_max = 1.2*max(list(magn_dict.values())) 
+        y_max = max(list(magn_dict.values())) 
+        #round to next 10th log
+        if y_log == True:
+            if y_min <= 0:
+                y_min = 10**(-6)
+            y_min = 10**(floor(log10(y_min)))
+            y_max = 10**(ceil(log10(y_max)))
         x_min = min(list(magn_dict.keys()))
         x_max = max(list(magn_dict.keys()))
         magn_plot.set_xlim(x_min, x_max)
