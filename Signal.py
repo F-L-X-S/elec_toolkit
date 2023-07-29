@@ -41,12 +41,12 @@ class Signal(Phys_unit):
                for t in  times: 
                    t = round(t, 6)
                    angle = round(2*np.pi*frequency*t, 6)
-                   data[t] = round(cls.calc_rule(cls, angle), 6)   
+                   data[t] = cls.calc_rule(cls, angle)   
         #constant signal
         else:
                 for t in  times: 
                     t = round(t, 6)
-                    data[t] = round(cls.calc_rule(cls, 0), 6)   
+                    data[t] = cls.calc_rule(cls, 0)   
         return cls(list(data.keys()),list(data.values()), unit, description)
     #------------------------------------------------------operations
     def __call__(self, t=None):

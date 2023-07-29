@@ -8,8 +8,8 @@ class Complex_phys_unit(Phys_unit):
         self.frequency = frequency 
         self.unit = unit
         self.descr = description
-        self.magn = round(self.complex_to_polar(value)['magn'], 3)
-        self.phase = round(self.complex_to_polar(value)["phase"], 3)
+        self.magn = self.complex_to_polar(value)['magn']
+        self.phase = self.complex_to_polar(value)["phase"]
         self.origin = 0+0j
         super().__init__(value, unit, description)
 
@@ -21,8 +21,8 @@ class Complex_phys_unit(Phys_unit):
      
     @staticmethod    
     def polar_to_complex(magnitude, phase):
-        re = round(magnitude * np.cos(np.radians(phase)), 3)
-        im = round(magnitude * np.sin(np.radians(phase)), 3)
+        re = round(magnitude * np.cos(np.radians(phase)), 10)
+        im = round(magnitude * np.sin(np.radians(phase)), 10)
         return complex(re, im)
     
     @staticmethod
@@ -32,8 +32,8 @@ class Complex_phys_unit(Phys_unit):
         except ZeroDivisionError:
             phase = 0
         magn = np.sqrt((complex_number.imag**2)+(complex_number.real**2))
-        phase=round(phase, 3)
-        magn = round(magn, 3)
+        phase=round(phase, 10)
+        magn = round(magn, 10)
         return {"magn":magn, "phase":phase}
     
     #Function to plot vector with annotation 
